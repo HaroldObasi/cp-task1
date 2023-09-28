@@ -10,7 +10,7 @@ const QuestionDetails = (props: Props) => {
   const [questionOptions, setQuestionOptions] = useState();
   return (
     <div className="my-[30px]">
-      <TextInput fieldName="Question" type="text" value="" />
+      <TextInput fieldName="Question" type="text" value="" name="question" />
       {state.questionType === "Paragraph" ||
       state.questionType === "ShortAnswer" ? (
         <p>Paragraph or short answer</p>
