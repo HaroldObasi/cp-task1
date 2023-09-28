@@ -9,6 +9,21 @@ import QuestionDetails from "../QuestionDetails";
 const Wrapper = () => {
   const { state, dispatch } = useContext(ModalContext);
 
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const question = state.question;
+    const caller = state.caller;
+
+    dispatch({
+      type: "UPDATE_FORM",
+      question: question as any,
+      caller: caller as any,
+    });
+
+    dispatch({
+      type: "HIDE",
+    });
+  };
+
   return (
     <div className="fixed inset-0 z-30 flex items-center justify-center">
       <div className="fixed inset-0 backdrop-blur-sm bg-black/30"></div>
@@ -24,13 +39,7 @@ const Wrapper = () => {
               Delete Question
             </button>
             <button
-              onClick={() =>
-                dispatch({
-                  type: "HIDE",
-                  caller: "null",
-                  questionType: "Paragraph",
-                })
-              }
+              onClick={(e) => handleSubmit(e)}
               className="text-white py-1 px-2 bg-green-600 rounded"
             >
               Save

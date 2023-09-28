@@ -11,7 +11,7 @@ type ActionType = {
   caller?: string;
   key?: string;
   questionType?: QuestionType;
-  question?: QuestionTemplate;
+  question?: string;
   defaultFormAttributes?: ApplicationFormAttributes;
 };
 
@@ -44,21 +44,24 @@ const reducer = (state: StateType, action: ActionType) => {
   switch (action.type) {
     case "SHOW":
       return { ...state, showModal: true, caller: action.caller };
+
     case "HIDE":
       return {
         ...state,
         showModal: false,
-        questionType: action.questionType,
+        questionType: initialState.questionType,
         question: defaultQuestion,
       };
+
     case "SET_FORM_ATTRS":
       console.log("form attrs: ", action.defaultFormAttributes);
       return {
         ...state,
         defaultFormAttributes: action.defaultFormAttributes,
       };
+
     case "CHANGE_QUESTION_TYPE":
-      const updatedQuestion: any = {
+      let updatedQuestion: any = {
         ...state.question,
         type: action.questionType,
       };
@@ -66,6 +69,43 @@ const reducer = (state: StateType, action: ActionType) => {
         ...state,
         questionType: action.questionType,
         question: updatedQuestion,
+      };
+
+    case "CHANGE_QUESTION":
+      let updatedQuestionText = {
+        ...state.question,
+        question: action.question,
+      };
+      return {
+        ...state,
+        question: updatedQuestionText,
+      };
+
+    case "UPDATE_FORM":
+      let caller = action.caller;
+      let question = action.question;
+      let key: string = "";
+
+      if (caller === "personalInformation") {
+        key = "personalQuestions";
+      } else if (caller === "profile") {
+        key = "profileQuestions";
+      }
+
+      const updatedFormAttributes = {
+        ...state.defaultFormAttributes[caller!],
+        [key]: [...state.defaultFormAttributes[caller!][key], question],
+      };
+
+      const updatedForm = {
+        ...state.defaultFormAttributes,
+        [caller as string]: updatedFormAttributes,
+      };
+
+      return {
+        ...state,
+
+        defaultFormAttributes: updatedForm,
       };
     default:
       return state;
