@@ -6,6 +6,10 @@ import Form from "./ui/Form";
 import FormItem from "./ui/Form/FormItem";
 import { ApplicationForm } from "../types/ApplicationForm";
 import { ModalContext } from "@/context/modal.context";
+import PersonalInformation from "./sections/PersonalInformation";
+import Profile from "./sections/Profile";
+import AdditionalQuestions from "./sections/AdditionalQuestions";
+import CoverImage from "./sections/CoverImage";
 
 const MainContent = () => {
   const { state, dispatch } = useContext(ModalContext);
@@ -32,36 +36,11 @@ const MainContent = () => {
 
   return (
     <div className="overflow-y-auto w-full h-screen">
-      This is the main content
       <div className="pl-[70px]">
-        <SectionItem title="Upload Cover Image">
-          <Uploader message="Upload cover image" />
-        </SectionItem>
-
-        <SectionItem title="Personal Information">
-          <Form parent="personalInformation">
-            <FormItem key="firstName" name="First Name" />
-            <FormItem key="lastName" name="Last Name" />
-            <FormItem key="email" name="Email" />
-            <FormItem key="nationality" name="Nationality" />
-            <FormItem key="currentResidence" name="Current Residence" />
-            <FormItem key="idNumber" name="ID Number" />
-            <FormItem key="dateOfBirth" name="Date Of Birth" />
-            <FormItem key="gender" name="Gender" />
-          </Form>
-        </SectionItem>
-
-        <SectionItem title="Profile">
-          <Form parent="profile">
-            <FormItem key="education" name="Education" />
-            <FormItem key="experience" name="Experience" />
-            <FormItem key="resume" name="Resume" />
-          </Form>
-        </SectionItem>
-
-        <SectionItem title="Additional Questions">
-          render additiona questions
-        </SectionItem>
+        <CoverImage />
+        <PersonalInformation />
+        <Profile />
+        <AdditionalQuestions />
       </div>
     </div>
   );
