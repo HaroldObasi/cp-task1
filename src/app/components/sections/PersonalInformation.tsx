@@ -9,6 +9,11 @@ type Props = {};
 
 function PersonalInformation({}: Props) {
   const { state } = useContext(ModalContext);
+
+  const personalQuestions =
+    state.defaultFormAttributes?.personalInformation?.personalQuestions || [];
+
+  console.log(state);
   return (
     <SectionItem title="Personal Information">
       <Form parent="personalInformation">
@@ -21,7 +26,7 @@ function PersonalInformation({}: Props) {
         <FormItem key="idNumber" name="ID Number" />
         <FormItem key="dateOfBirth" name="Date Of Birth" />
         <FormItem key="gender" name="Gender" />
-        {state.defaultFormAttributes.personalInformation.personalQuestions.map(
+        {personalQuestions.map(
           (
             item: QuestionTemplate,
             index: number,
@@ -30,6 +35,7 @@ function PersonalInformation({}: Props) {
             <CustomQuestion
               question={item}
               key={item.question}
+              index={index}
               lastItem={index === array.length - 1}
             />
           )
