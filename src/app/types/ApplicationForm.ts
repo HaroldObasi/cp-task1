@@ -19,10 +19,6 @@ type ApplicationFormAttributes = {
     dateOfBirth: PersonalInformationTemplate;
     gender: PersonalInformationTemplate;
     personalQuestions?: Array<QuestionTemplate>;
-    [key: string]:
-      | PersonalInformationTemplate
-      | Array<QuestionTemplate>
-      | undefined;
   };
   profile?: {
     education: ProfileTemplate;
@@ -39,24 +35,36 @@ type PersonalInformationTemplate = {
   show: boolean;
 };
 
-type ProfileTemplate = {};
-
-type QuestionTemplate = {
-  id: string;
-  type:
-    | "Paragraph"
-    | "ShortAnswer"
-    | "YesNo"
-    | "Dropdown"
-    | "MultipleChoice"
-    | "Date"
-    | "Number"
-    | "FileUpload";
-  question: string;
-  choices: Array<string>;
-  maxChoice: number;
-  disqualify: boolean;
-  other: boolean;
+type ProfileTemplate = {
+  mandatory: boolean;
+  show: boolean;
 };
 
-export type { ApplicationForm };
+type QuestionType =
+  | "Paragraph"
+  | "ShortAnswer"
+  | "YesNo"
+  | "Dropdown"
+  | "MultipleChoice"
+  | "Date"
+  | "Number"
+  | "FileUpload";
+
+type QuestionTemplate = {
+  id?: string;
+  type: QuestionType;
+  question: string;
+  choices?: Array<string>;
+  maxChoice?: number;
+  disqualify?: boolean;
+  other?: boolean;
+};
+
+export type {
+  ApplicationForm,
+  ApplicationFormAttributes,
+  QuestionTemplate,
+  PersonalInformationTemplate,
+  ProfileTemplate,
+  QuestionType,
+};
