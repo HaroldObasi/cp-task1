@@ -39,7 +39,7 @@ const MainContent = () => {
         </SectionItem>
 
         <SectionItem title="Personal Information">
-          <Form parent="personalQuestions">
+          <Form parent="personalInformation">
             <FormItem key="firstName" name="First Name" />
             <FormItem key="lastName" name="Last Name" />
             <FormItem key="email" name="Email" />
@@ -52,7 +52,7 @@ const MainContent = () => {
         </SectionItem>
 
         <SectionItem title="Profile">
-          <Form parent="profileQuestions">
+          <Form parent="profile">
             <FormItem key="education" name="Education" />
             <FormItem key="experience" name="Experience" />
             <FormItem key="resume" name="Resume" />
