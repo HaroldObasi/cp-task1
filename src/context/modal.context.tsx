@@ -55,7 +55,6 @@ const reducer = (state: StateType, action: ActionType) => {
       };
 
     case "SET_FORM_ATTRS":
-      console.log("form attrs: ", action.defaultFormAttributes);
       return {
         ...state,
         defaultFormAttributes: action.defaultFormAttributes,
@@ -63,7 +62,7 @@ const reducer = (state: StateType, action: ActionType) => {
 
     case "CHANGE_QUESTION_TYPE":
       let updatedQuestion: any = {
-        ...state.question,
+        ...defaultQuestion,
         type: action.questionType,
       };
       return {
@@ -72,7 +71,14 @@ const reducer = (state: StateType, action: ActionType) => {
         question: updatedQuestion,
       };
 
-    case "CHANGE_QUESTION":
+    case "ADD_QUESTION_FIELD":
+      console.log("incoming new question: ", action.question);
+      return {
+        ...state,
+        question: action.question,
+      };
+
+    case "CHANGE_QUESTION_TEXT":
       let updatedQuestionText = {
         ...state.question,
         question: action.question,
@@ -144,15 +150,15 @@ const reducer = (state: StateType, action: ActionType) => {
       };
 
       const form = {
-        ...state.defaultFormAttributes, 
-        [editCaller as string]: formAttrs
-      }
+        ...state.defaultFormAttributes,
+        [editCaller as string]: formAttrs,
+      };
 
       return {
-        ...state, 
+        ...state,
         defaultFormAttributes: form,
-        question: defaultQuestion
-      }
+        question: defaultQuestion,
+      };
     default:
       return state;
   }

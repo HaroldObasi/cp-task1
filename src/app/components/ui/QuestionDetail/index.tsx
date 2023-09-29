@@ -12,7 +12,6 @@ type Props = {
 
 const index = (props: Props) => {
   const { state, dispatch } = useContext(ModalContext);
-  const [questionOptions, setQuestionOptions] = useState();
   const [isChecked, setIsChecked] = useState(false);
   const [question, setQuestion] = useState<QuestionTemplate | undefined>(
     undefined
@@ -20,22 +19,42 @@ const index = (props: Props) => {
 
   const appendArray = (choice: string) => {
     const newChoiceArr = [...question?.choices!, choice];
-    setQuestion({ ...question!, choices: newChoiceArr });
+    const newQuestion = { ...question!, choices: newChoiceArr };
+    dispatch({
+      type: "ADD_QUESTION_FIELD",
+      question: newQuestion,
+    });
+  };
+
+  const changeChoice = (choice: string, index: number) => {
+    const newChoiceArr: Array<string> = question?.choices!;
+    newChoiceArr[index] = choice;
+    const newQuestion = { ...question!, choices: newChoiceArr };
+    dispatch({
+      type: "ADD_QUESTION_FIELD",
+      question: newQuestion,
+    });
   };
 
   useEffect(() => {
     if (props.question) {
-      console.log("this is edit mode");
       setQuestion(props.question);
+      console.log("editing mode: ", props.question);
     } else {
       setQuestion(state.question);
-      console.log("this is create mode");
     }
-  }, []);
+  }, [state.question]);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked); // Toggle the checkbox state
+    // dispatch action that changes the questions disqualify state
+    setIsChecked(!isChecked);
+    dispatch({
+      type: "ADD_QUESTION_FIELD",
+      question: { ...state.question!, disqualify: !isChecked },
+    });
   };
+
+  console.log("box is checked: ", isChecked);
 
   return (
     <div className={props.className + ""}>
@@ -45,7 +64,7 @@ const index = (props: Props) => {
           <label>
             <input
               type="checkbox"
-              checked={props.question?.disqualify || isChecked}
+              checked={isChecked}
               onChange={handleCheckboxChange}
             />
             Disqualify candidate if the answer is no
@@ -53,7 +72,11 @@ const index = (props: Props) => {
         </div>
       ) : state.questionType === "Dropdown" ||
         state.questionType === "MultipleChoice" ? (
-        <ChoiceMap setter={appendArray} array={question?.choices!} />
+        <ChoiceMap
+          setChoice={changeChoice}
+          setter={appendArray}
+          array={question?.choices!}
+        />
       ) : (
         <></>
       )}
