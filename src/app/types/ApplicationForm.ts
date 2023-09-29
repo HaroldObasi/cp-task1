@@ -60,6 +60,29 @@ type QuestionTemplate = {
   other?: boolean;
 };
 
+type QuestionTypeObject = {
+  name: string;
+  key: QuestionType;
+};
+
+export const questionTypes: Array<QuestionTypeObject> = [
+  {
+    name: "Paragraph",
+    key: "Paragraph",
+  },
+  {
+    name: "Short Answer",
+    key: "ShortAnswer",
+  },
+  { name: "Yes No", key: "YesNo" },
+  { name: "Dropdown", key: "Dropdown" },
+  { name: "Multiple Choice", key: "MultipleChoice" },
+  { name: "Date", key: "Date" },
+  { name: "Number", key: "Number" },
+  { name: "File Upload", key: "FileUpload" },
+];
+
+
 export type {
   ApplicationForm,
   ApplicationFormAttributes,

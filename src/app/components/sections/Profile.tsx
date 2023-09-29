@@ -30,6 +30,7 @@ function Profile({}: Props) {
               key={item.question}
               index={index}
               lastItem={index === array.length - 1}
+              parent="profile"
             />
           )
         )}
