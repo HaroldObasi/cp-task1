@@ -33,6 +33,7 @@ function PersonalInformation({}: Props) {
             array: Array<QuestionTemplate>
           ) => (
             <CustomQuestion
+              parent="personalInformation"
               question={item}
               key={item.question}
               index={index}
