@@ -38,6 +38,10 @@ const index = (props: Props) => {
       editIndex: props.index,
     });
 
+    dispatch({
+      type: "HIDE",
+    });
+    setEditingMode(false);
     e.preventDefault();
   };
 
@@ -69,7 +73,7 @@ const index = (props: Props) => {
       </div>
       {editingMode && (
         <div>
-          <QuestionDetails className="mt-3" />
+          <QuestionDetails question={props.question} className="mt-3" />
           <div className="flex justify-between">
             <button
               className="text-red-600"
