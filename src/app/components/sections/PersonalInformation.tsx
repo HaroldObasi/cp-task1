@@ -35,7 +35,7 @@ function PersonalInformation({}: Props) {
             <CustomQuestion
               parent="personalInformation"
               question={item}
-              key={item.question}
+              key={index}
               index={index}
               lastItem={index === array.length - 1}
             />

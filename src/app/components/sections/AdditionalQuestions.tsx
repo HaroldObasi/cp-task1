@@ -24,7 +24,7 @@ const AdditionalQuestions = (props: Props) => {
           ) => (
             <CustomQuestion
               question={item}
-              key={item.question}
+              key={index}
               index={index}
               lastItem={index === array.length - 1}
               parent="customisedQuestions"
