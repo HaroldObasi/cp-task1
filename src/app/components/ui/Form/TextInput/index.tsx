@@ -1,6 +1,7 @@
 import React from "react";
 import { ModalContext } from "@/context/modal.context";
 import { useContext } from "react";
+import { QuestionTemplate } from "@/app/types/ApplicationForm";
 
 type Props = {
   fieldName: string;
@@ -13,7 +14,7 @@ type Props = {
 const index = (props: Props) => {
   const { state, dispatch } = useContext(ModalContext);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "CHANGE_QUESTION", question: event.target.value });
+    dispatch({ type: "CHANGE_QUESTION", question: event.target.value as any });
   };
   // send name of field (question), text data, to reducer, in the reducer change the current questions question field to the text data
   return (

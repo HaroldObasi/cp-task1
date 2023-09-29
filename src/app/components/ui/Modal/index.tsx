@@ -28,7 +28,7 @@ const Wrapper = () => {
     <div className="fixed inset-0 z-30 flex items-center justify-center">
       <div className="fixed inset-0 backdrop-blur-sm bg-black/30"></div>
       <div className="z-40  rounded-md mx-5 xs:mx-5 ">
-        <SectionItem title="Questions">
+        <SectionItem title="Questions" fullHeight={false}>
           <DropDown title="Type" />
           <QuestionDetails className="my-[25px]" />
           <div className="flex justify-between">
