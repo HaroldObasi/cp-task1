@@ -10,11 +10,7 @@ type Props = {
   key: string;
   internal?: boolean;
   show?: boolean;
-  //   data:
-  //     | QuestionTemplate[]
-  //     | PersonalInformationTemplate
-  //     | ProfileTemplate
-  //     | undefined;
+
 };
 
 const index = (props: Props) => {
