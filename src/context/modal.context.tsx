@@ -11,8 +11,9 @@ type ActionType = {
   caller?: string;
   key?: string;
   questionType?: QuestionType;
-  question?: string;
+  question?: QuestionTemplate;
   defaultFormAttributes?: ApplicationFormAttributes;
+  editIndex?: number;
 };
 
 export const defaultQuestion: QuestionTemplate = {
@@ -86,10 +87,20 @@ const reducer = (state: StateType, action: ActionType) => {
       let question = action.question;
       let key: string = "";
 
+      if (question === defaultQuestion) {
+        return { ...state };
+      }
+
       if (caller === "personalInformation") {
         key = "personalQuestions";
       } else if (caller === "profile") {
         key = "profileQuestions";
+      } else if (caller === "customisedQuestions") {
+        const updatedForm = {
+          ...state.defaultFormAttributes,
+          [caller]: [...state.defaultFormAttributes[caller!], question],
+        };
+        return { ...state, defaultFormAttributes: updatedForm };
       }
 
       const updatedFormAttributes = {
@@ -104,9 +115,44 @@ const reducer = (state: StateType, action: ActionType) => {
 
       return {
         ...state,
-
         defaultFormAttributes: updatedForm,
       };
+    case "EDIT_FORM_INDEX":
+      let editCaller = action.caller;
+      let editQuestion = action.question;
+      let editKey: string = "";
+      let index: number = action.editIndex!;
+
+      if (editCaller === "customisedQuestions") {
+        const arrCopy = state.defaultFormAttributes[editCaller!];
+        arrCopy[index] = editQuestion;
+        return { ...state, [editCaller]: arrCopy, question: defaultQuestion };
+      }
+
+      if (editCaller === "personalInformation") {
+        editKey = "personalQuestions";
+      } else if (editCaller === "profile") {
+        editKey = "profileQuestions";
+      }
+
+      const arrCopy = state.defaultFormAttributes[editCaller!][editKey!];
+      arrCopy[index] = editQuestion;
+
+      const formAttrs = {
+        ...state.defaultFormAttributes[editCaller!],
+        [editKey]: arrCopy,
+      };
+
+      const form = {
+        ...state.defaultFormAttributes, 
+        [editCaller as string]: formAttrs
+      }
+
+      return {
+        ...state, 
+        defaultFormAttributes: form,
+        question: defaultQuestion
+      }
     default:
       return state;
   }
