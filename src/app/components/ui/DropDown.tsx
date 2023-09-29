@@ -47,7 +47,9 @@ const DropDown = (props: Props) => {
         }}
       >
         {questionTypes.map((item) => (
-          <option value={item.key}>{item.name}</option>
+          <option key={item.key} value={item.key}>
+            {item.name}
+          </option>
         ))}
       </select>
     </div>
