@@ -4,7 +4,7 @@ import { ModalContext } from "@/context/modal.context";
 import { createPortal } from "react-dom";
 import DropDown from "../DropDown";
 import SectionItem from "../SectionItem";
-import QuestionDetails from "../QuestionDetails";
+import QuestionDetails from "../QuestionDetail";
 
 const Wrapper = () => {
   const { state, dispatch } = useContext(ModalContext);
@@ -30,7 +30,7 @@ const Wrapper = () => {
       <div className="z-40  rounded-md mx-5 xs:mx-5 ">
         <SectionItem title="Questions">
           <DropDown title="Type" />
-          <QuestionDetails />
+          <QuestionDetails className="my-[25px]" />
           <div className="flex justify-between">
             <button
               className="text-red-600"
