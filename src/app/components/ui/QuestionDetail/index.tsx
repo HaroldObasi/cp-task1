@@ -17,6 +17,16 @@ const index = (props: Props) => {
     undefined
   );
 
+  useEffect(() => {
+    if (props.question) {
+      setQuestion(props.question);
+      console.log("editing mode: ", props.question);
+      //WHY DONT YOU SET THE STATE.QUESTION TO THE QUESTION CURRENTLY BEING EDITED ??
+    } else {
+      setQuestion(state.question);
+    }
+  }, [state.question]);
+
   const appendArray = (choice: string) => {
     const newChoiceArr = [...question?.choices!, choice];
     const newQuestion = { ...question!, choices: newChoiceArr };
@@ -35,15 +45,6 @@ const index = (props: Props) => {
       question: newQuestion,
     });
   };
-
-  useEffect(() => {
-    if (props.question) {
-      setQuestion(props.question);
-      console.log("editing mode: ", props.question);
-    } else {
-      setQuestion(state.question);
-    }
-  }, [state.question]);
 
   const handleCheckboxChange = () => {
     // dispatch action that changes the questions disqualify state
