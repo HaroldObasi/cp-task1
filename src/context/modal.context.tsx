@@ -15,6 +15,9 @@ type ActionType = {
   defaultFormAttributes?: ApplicationFormAttributes;
   editIndex?: number;
   questionIndex?: number;
+  formItemKey?: "internalUse" | "mandatory" | "show" | string;
+  formItemField?: string;
+  formItemValue?: boolean;
 };
 
 export const defaultQuestion: QuestionTemplate = {
@@ -200,6 +203,32 @@ const reducer = (state: StateType, action: ActionType) => {
         question: eQuestion,
       };
       return returnObj;
+
+    case "CHANGE_FORM_ITEM":
+      console.log(`${action.formItemKey}: `, action.formItemValue);
+      const newObject = {
+        ...state.defaultFormAttributes[action.caller!][action.formItemField!],
+        [action.formItemKey!]: action.formItemValue,
+      };
+
+      console.log(`${action.formItemField}: `, newObject);
+
+      const newFormField = {
+        ...state.defaultFormAttributes[action.caller!],
+        [action.formItemField!]: newObject,
+      };
+
+      console.log(`${action.caller}`, newFormField);
+
+      const newForm2 = {
+        ...state.defaultFormAttributes,
+        [action.caller!]: newFormField,
+      };
+
+      console.log("defaultFormAttrs", newForm2);
+
+      return { ...state, defaultFormAttributes: newForm2 };
+
     default:
       return state;
   }

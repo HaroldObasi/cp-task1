@@ -17,19 +17,22 @@ function Profile({}: Props) {
     <SectionItem title="Profile">
       <Form parent="profile">
         <FormItem
-          key="education"
+          parent="profile"
+          itemName="education"
           name="Education"
           show={state.defaultFormAttributes.profile.education.show}
           mandatory={state.defaultFormAttributes.profile.education.mandatory}
         />
         <FormItem
-          key="experience"
+          parent="profile"
+          itemName="experience"
           name="Experience"
           show={state.defaultFormAttributes.profile.experience.show}
           mandatory={state.defaultFormAttributes.profile.experience.mandatory}
         />
         <FormItem
-          key="resume"
+          parent="profile"
+          itemName="resume"
           name="Resume"
           show={state.defaultFormAttributes.profile.resume.show}
           mandatory={state.defaultFormAttributes.profile.resume.mandatory}

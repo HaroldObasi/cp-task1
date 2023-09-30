@@ -19,11 +19,20 @@ function PersonalInformation({}: Props) {
   return (
     <SectionItem title="Personal Information">
       <Form parent="personalInformation">
-        <FormItem key="firstName" name="First Name" />
-        <FormItem key="lastName" name="Last Name" />
-        <FormItem key="email" name="Email" />
         <FormItem
-          key="phoneNumber"
+          parent="personalInformation"
+          itemName="firstName"
+          name="First Name"
+        />
+        <FormItem
+          parent="personalInformation"
+          itemName="lastName"
+          name="Last Name"
+        />
+        <FormItem parent="personalInformation" itemName="email" name="Email" />
+        <FormItem
+          parent="personalInformation"
+          itemName="phoneNumber"
           name="Phone"
           subText="(without dial code)"
           show={
@@ -35,7 +44,8 @@ function PersonalInformation({}: Props) {
           }
         />
         <FormItem
-          key="nationality"
+          parent="personalInformation"
+          itemName="nationality"
           name="Nationality"
           show={
             state.defaultFormAttributes.personalInformation.nationality.show
@@ -46,7 +56,8 @@ function PersonalInformation({}: Props) {
           }
         />
         <FormItem
-          key="currentResidence"
+          parent="personalInformation"
+          itemName="currentResidence"
           name="Current Residence"
           show={
             state.defaultFormAttributes.personalInformation.currentResidence
@@ -58,7 +69,8 @@ function PersonalInformation({}: Props) {
           }
         />
         <FormItem
-          key="idNumber"
+          parent="personalInformation"
+          itemName="idNumber"
           name="ID Number"
           show={state.defaultFormAttributes.personalInformation.idNumber.show}
           internalUse={
@@ -66,7 +78,8 @@ function PersonalInformation({}: Props) {
           }
         />
         <FormItem
-          key="dateOfBirth"
+          parent="personalInformation"
+          itemName="dateOfBirth"
           name="Date Of Birth"
           show={
             state.defaultFormAttributes.personalInformation.dateOfBirth.show
@@ -77,7 +90,8 @@ function PersonalInformation({}: Props) {
           }
         />
         <FormItem
-          key="gender"
+          parent="personalInformation"
+          itemName="gender"
           name="Gender"
           show={state.defaultFormAttributes.personalInformation.gender.show}
           internalUse={

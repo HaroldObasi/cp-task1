@@ -2,6 +2,8 @@ import React from "react";
 
 type Props = {
   checked: boolean;
+  onChange: (key: string, value: boolean) => void;
+  formItemName?: string;
 };
 
 function Toggle(props: Props) {
@@ -10,7 +12,7 @@ function Toggle(props: Props) {
       <input
         checked={props.checked}
         onChange={(e) => {
-          console.log(e.target.checked);
+          props.onChange("show", e.target.checked);
         }}
         type="checkbox"
         value=""

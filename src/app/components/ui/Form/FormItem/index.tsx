@@ -1,22 +1,29 @@
-import React from "react";
-import {
-  QuestionTemplate,
-  PersonalInformationTemplate,
-  ProfileTemplate,
-} from "@/app/types/ApplicationForm";
+import React, { useContext } from "react";
 import Toggle from "../../Toggle";
 import Checkbox from "../../Checkbox";
+import { ModalContext } from "@/context/modal.context";
 
 type Props = {
   name: string;
   subText?: string;
-  key: string;
+  itemName: string;
   internalUse?: boolean;
   show?: boolean;
   mandatory?: boolean;
+  parent: string;
 };
 
 const index = (props: Props) => {
+  const { state, dispatch } = useContext(ModalContext);
+  const onChange = (key: string, value: boolean) => {
+    dispatch({
+      type: "CHANGE_FORM_ITEM",
+      caller: props.parent,
+      formItemField: props.itemName,
+      formItemKey: key,
+      formItemValue: value,
+    });
+  };
   console.log("show: ", props.show);
   return (
     <div className="pb-[25px] border-b mb-[23px] flex justify-between items-center border-[#C4C4C4]">
@@ -25,12 +32,24 @@ const index = (props: Props) => {
       </p>
       <div className="flex flex-row gap-x-10">
         {props.mandatory !== undefined && (
-          <Checkbox checked={props.mandatory} label="Mandatory" />
+          <Checkbox
+            onChange={onChange}
+            checked={props.mandatory}
+            label="Mandatory"
+            formItemName="mandatory"
+          />
         )}
         {props.internalUse !== undefined && (
-          <Checkbox checked={props.internalUse} label="Internal" />
+          <Checkbox
+            onChange={onChange}
+            checked={props.internalUse}
+            label="Internal"
+            formItemName="internalUse"
+          />
         )}
-        {props.show !== undefined && <Toggle checked={props.show} />}
+        {props.show !== undefined && (
+          <Toggle onChange={onChange} checked={props.show} />
+        )}
       </div>
     </div>
   );
