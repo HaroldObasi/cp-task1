@@ -32,7 +32,7 @@ const MainContent = () => {
   }, []);
 
   return (
-    <div className="overflow-y-auto w-full h-screen">
+    <div className={`overflow-y-auto w-full h-screen`}>
       {dataLoaded && (
         <div className="pl-[70px]">
           <CoverImage />
