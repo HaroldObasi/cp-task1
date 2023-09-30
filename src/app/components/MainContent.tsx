@@ -10,6 +10,7 @@ import CoverImage from "./sections/CoverImage";
 
 const MainContent = () => {
   const { dispatch } = useContext(ModalContext);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const fetchForm = async () => {
     try {
       const response = await axios.get(
@@ -20,6 +21,7 @@ const MainContent = () => {
         type: "SET_FORM_ATTRS",
         defaultFormAttributes: data.data.attributes,
       });
+      setDataLoaded(true);
     } catch (error) {
       console.error(error);
     }
@@ -31,12 +33,14 @@ const MainContent = () => {
 
   return (
     <div className="overflow-y-auto w-full h-screen">
-      <div className="pl-[70px]">
-        <CoverImage />
-        <PersonalInformation />
-        <Profile />
-        <AdditionalQuestions />
-      </div>
+      {dataLoaded && (
+        <div className="pl-[70px]">
+          <CoverImage />
+          <PersonalInformation />
+          <Profile />
+          <AdditionalQuestions />
+        </div>
+      )}
     </div>
   );
 };
