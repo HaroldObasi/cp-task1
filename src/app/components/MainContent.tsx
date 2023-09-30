@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 import { ApplicationForm } from "../types/ApplicationForm";
 import { ModalContext } from "@/context/modal.context";
@@ -13,10 +13,10 @@ const MainContent = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const fetchForm = async () => {
     try {
-      const response = await axios.get(
+      const response = await fetch(
         "http://127.0.0.1:4010/api/819.6588064757781/programs/qui/application-form"
       );
-      const data: ApplicationForm = response.data;
+      const data: any = await response.json();
       dispatch({
         type: "SET_FORM_ATTRS",
         defaultFormAttributes: data.data.attributes,
