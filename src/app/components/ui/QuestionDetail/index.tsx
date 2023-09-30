@@ -97,6 +97,7 @@ const index = (props: Props) => {
           <label>
             <input
               type="checkbox"
+              className="accent-green-600 mr-2"
               checked={question?.disqualify}
               onChange={handleCheckboxChange}
             />

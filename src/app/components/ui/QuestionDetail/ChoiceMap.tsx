@@ -27,10 +27,11 @@ const ChoiceMap = (props: Props) => {
       <div className="pt-[25px]">
         <input
           checked={props.other}
+          className="accent-green-600 mr-2"
           onChange={props.setOther}
           type="checkbox"
         />
-        <label className="pt-[25px]"> Enable other option </label>
+        <label className="pt-[25px]"> Enable "Other" option </label>
       </div>
     </div>
   );
