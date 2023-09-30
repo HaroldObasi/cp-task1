@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { QuestionTemplate } from "@/app/types/ApplicationForm";
 import editIcon from "@/assets/editIcon.svg";
 import Image from "next/image";
@@ -29,7 +29,6 @@ const index = (props: Props) => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const question = state.question;
-    const caller = state.caller;
 
     dispatch({
       type: "EDIT_FORM_INDEX",
@@ -47,22 +46,25 @@ const index = (props: Props) => {
 
   const clickEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    if (editingMode) {
+    if (state.editIndex !== null) {
       dispatch({
         type: "HIDE",
       });
     } else {
       dispatch({
-        type: "CHANGE_QUESTION_TYPE",
-        questionType: props.question.type,
+        type: "EDIT_MODE",
+        questionIndex: props.index,
+        caller: props.parent,
       });
     }
-    setEditingMode(!editingMode);
   };
+
+  console.log("index: ", props.index, state.editIndex);
+  console.log("caller: ", props.parent, state.caller);
 
   return (
     <div className={`${!props.lastItem && "border-b mb-[25px]"} pb-[25px] `}>
-      <div className={`flex justify-between items-center   `}>
+      <div className={`flex justify-between items-center`}>
         <div>
           <p className="text-[14px]">{questionNameMap[props.question.type]}</p>
           <p className="text-[20px]">{props.question.question}</p>
@@ -71,9 +73,9 @@ const index = (props: Props) => {
           <Image alt="Edit Question" src={editIcon} />
         </button>
       </div>
-      {editingMode && (
+      {state.editIndex === props.index && state.caller === props.parent && (
         <div>
-          <QuestionDetails question={props.question} className="mt-3" />
+          <QuestionDetails question={state.question} className="mt-3" />
           <div className="flex justify-between">
             <button
               className="text-red-600"

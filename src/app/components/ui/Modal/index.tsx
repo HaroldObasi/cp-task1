@@ -30,17 +30,12 @@ const Wrapper = () => {
       <div className="z-40  rounded-md mx-5 xs:mx-5 ">
         <SectionItem title="Questions" fullHeight={false}>
           <DropDown title="Type" />
-          <QuestionDetails className="my-[25px]" />
+          <QuestionDetails question={state.question} className="my-[25px]" />
           <div className="flex justify-between">
-            <button
-              className="text-red-600"
-              onClick={() => console.log(state.caller)}
-            >
-              Delete Question
-            </button>
+            <button className="text-red-600">Delete Question</button>
             <button
               onClick={(e) => handleSubmit(e)}
-              className="text-white py-1 px-2 bg-green-600 rounded"
+              className="text-white font-semibold text-base py-1 px-2 bg-green-600 rounded"
             >
               Save
             </button>

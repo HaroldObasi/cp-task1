@@ -25,7 +25,7 @@ const index = (props: Props) => {
       setQuestion(state.question);
     }
   }, [state.question]);
-
+  console.log("the questions: ", question);
   const changeQuestionName = (string: string) => {
     const newQuestion = { ...question!, question: string };
     dispatch({
@@ -97,7 +97,7 @@ const index = (props: Props) => {
           <label>
             <input
               type="checkbox"
-              checked={isChecked}
+              checked={question?.disqualify}
               onChange={handleCheckboxChange}
             />
             Disqualify candidate if the answer is no

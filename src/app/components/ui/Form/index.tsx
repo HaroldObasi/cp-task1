@@ -18,7 +18,6 @@ const index = (props: Props) => {
         onClick={(e) => {
           e.preventDefault();
           dispatch({ type: "SHOW", caller: props.parent });
-          console.log("form: ", state.showModal);
         }}
       >
         <Image src={plusIcon} alt="Add a question" />

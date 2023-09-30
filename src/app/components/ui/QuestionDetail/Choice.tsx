@@ -38,7 +38,6 @@ const Choice = (props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               props.setArray("New Choice");
-              console.log("props arr: ", props.array);
             }}
           >
             {props.isLast && <Image width={15} alt="Add item" src={plusIcon} />}

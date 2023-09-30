@@ -14,6 +14,7 @@ type ActionType = {
   question?: QuestionTemplate;
   defaultFormAttributes?: ApplicationFormAttributes;
   editIndex?: number;
+  questionIndex?: number;
 };
 
 export const defaultQuestion: QuestionTemplate = {
@@ -30,6 +31,8 @@ type StateType = {
   caller?: string | null;
   questionType?: QuestionType;
   question?: QuestionTemplate;
+  globalEditMode: boolean;
+  editIndex: number | null;
   defaultFormAttributes?: ApplicationFormAttributes | any;
 };
 
@@ -39,6 +42,8 @@ const initialState: StateType = {
   questionType: "Paragraph",
   question: defaultQuestion,
   defaultFormAttributes: {},
+  editIndex: null,
+  globalEditMode: false,
 };
 
 const reducer = (state: StateType, action: ActionType) => {
@@ -49,9 +54,11 @@ const reducer = (state: StateType, action: ActionType) => {
     case "HIDE":
       return {
         ...state,
+        editIndex: null,
         showModal: false,
         questionType: initialState.questionType,
         question: defaultQuestion,
+        caller: null,
       };
 
     case "SET_FORM_ATTRS":
@@ -72,7 +79,6 @@ const reducer = (state: StateType, action: ActionType) => {
       };
 
     case "ADD_QUESTION_FIELD":
-      console.log("incoming new question: ", action.question);
       return {
         ...state,
         question: action.question,
@@ -159,6 +165,41 @@ const reducer = (state: StateType, action: ActionType) => {
         defaultFormAttributes: form,
         question: defaultQuestion,
       };
+    case "EDIT_MODE":
+      let modeKey: string = "";
+      let returnObj = {};
+      let eQuestion: QuestionTemplate | undefined = undefined;
+
+      if (action.caller === "customisedQuestions") {
+        eQuestion =
+          state.defaultFormAttributes[action.caller][
+            action.questionIndex as number
+          ];
+
+        // return { ...state, questionType: question.type, question: question };
+      } else if (action.caller === "personalInformation") {
+        modeKey = "personalQuestions";
+        eQuestion =
+          state.defaultFormAttributes[action.caller][modeKey][
+            action.questionIndex as number
+          ];
+        // return { ...state, question: question, questionType: question.type };
+      } else if (action.caller === "profile") {
+        modeKey = "profileQuestions";
+        eQuestion =
+          state.defaultFormAttributes[action.caller][modeKey][
+            action.questionIndex as number
+          ];
+        // return { ...state, question: question, questionType: question.type };
+      }
+      returnObj = {
+        ...state,
+        questionType: eQuestion?.type,
+        caller: action.caller,
+        editIndex: action.questionIndex,
+        question: eQuestion,
+      };
+      return returnObj;
     default:
       return state;
   }

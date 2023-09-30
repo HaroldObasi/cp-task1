@@ -13,7 +13,6 @@ function PersonalInformation({}: Props) {
   const personalQuestions =
     state.defaultFormAttributes?.personalInformation?.personalQuestions || [];
 
-  console.log(state);
   return (
     <SectionItem title="Personal Information">
       <Form parent="personalInformation">
