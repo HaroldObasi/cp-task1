@@ -19,12 +19,16 @@ function PersonalInformation({}: Props) {
         <FormItem key="firstName" name="First Name" />
         <FormItem key="lastName" name="Last Name" />
         <FormItem key="email" name="Email" />
-        <FormItem key="phoneNumber" name="Phone Number (without dial code)" />
-        <FormItem key="nationality" name="Nationality" />
-        <FormItem key="currentResidence" name="Current Residence" />
-        <FormItem key="idNumber" name="ID Number" />
-        <FormItem key="dateOfBirth" name="Date Of Birth" />
-        <FormItem key="gender" name="Gender" />
+        <FormItem
+          key="phoneNumber"
+          name="Phone Number (without dial code)"
+          show
+        />
+        <FormItem key="nationality" name="Nationality" show />
+        <FormItem key="currentResidence" name="Current Residence" show />
+        <FormItem key="idNumber" name="ID Number" show />
+        <FormItem key="dateOfBirth" name="Date Of Birth" show />
+        <FormItem key="gender" name="Gender" show />
         {personalQuestions.map(
           (
             item: QuestionTemplate,

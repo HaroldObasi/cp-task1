@@ -16,9 +16,9 @@ function Profile({}: Props) {
   return (
     <SectionItem title="Profile">
       <Form parent="profile">
-        <FormItem key="education" name="Education" />
-        <FormItem key="experience" name="Experience" />
-        <FormItem key="resume" name="Resume" />
+        <FormItem key="education" name="Education" show />
+        <FormItem key="experience" name="Experience" show />
+        <FormItem key="resume" name="Resume" show />
         {profileQuestions.map(
           (
             item: QuestionTemplate,
