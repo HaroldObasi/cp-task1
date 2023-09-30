@@ -6,25 +6,35 @@ import { QuestionTemplate } from "@/app/types/ApplicationForm";
 type Props = {
   fieldName: string;
   name: string;
-  value: string;
-  onChange?: (e: any) => void;
-  type: "text" | "password" | "email";
+  value: string | number;
+  placeholder: string;
+  onChange?: any;
+  type: "text" | "password" | "email" | "number";
+  className?: string;
 };
 
 const index = (props: Props) => {
   const { state, dispatch } = useContext(ModalContext);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "CHANGE_QUESTION", question: event.target.value as any });
+    // props.onChange(event.target.value)
+    dispatch({
+      type: "CHANGE_QUESTION_TEXT",
+      question: event.target.value as any,
+    });
   };
   // send name of field (question), text data, to reducer, in the reducer change the current questions question field to the text data
   return (
-    <div className="flex flex-col mb-[23px] pb-1">
-      <label htmlFor={props.fieldName}>{props.fieldName}</label>
+    <div className={`${props.className} flex flex-col mb-[23px] pb-1`}>
+      <label className="pb-2 font-semibold text-xl" htmlFor={props.fieldName}>
+        {props.fieldName}
+      </label>
       <input
         className="border rounded-md border-black py-3 px-2 w-full focus:outline-none"
         type={props.type}
         name={props.name}
-        onChange={(e) => handleChange(e)}
+        // value={props.value}
+        placeholder={props.placeholder}
+        onChange={(e) => props.onChange(e.target.value)}
         id=""
       />
     </div>

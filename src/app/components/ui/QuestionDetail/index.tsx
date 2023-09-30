@@ -20,16 +20,32 @@ const index = (props: Props) => {
   useEffect(() => {
     if (props.question) {
       setQuestion(props.question);
-      console.log("editing mode: ", props.question);
       //WHY DONT YOU SET THE STATE.QUESTION TO THE QUESTION CURRENTLY BEING EDITED ??
     } else {
       setQuestion(state.question);
     }
   }, [state.question]);
 
+  const changeQuestionName = (string: string) => {
+    const newQuestion = { ...question!, question: string };
+    dispatch({
+      type: "ADD_QUESTION_FIELD",
+      question: newQuestion,
+    });
+  };
+
   const appendArray = (choice: string) => {
     const newChoiceArr = [...question?.choices!, choice];
     const newQuestion = { ...question!, choices: newChoiceArr };
+    // setQuestion(newQuestion);
+    dispatch({
+      type: "ADD_QUESTION_FIELD",
+      question: newQuestion,
+    });
+  };
+
+  const toggleOther = () => {
+    const newQuestion = { ...question!, other: !question?.other };
     dispatch({
       type: "ADD_QUESTION_FIELD",
       question: newQuestion,
@@ -40,6 +56,7 @@ const index = (props: Props) => {
     const newChoiceArr: Array<string> = question?.choices!;
     newChoiceArr[index] = choice;
     const newQuestion = { ...question!, choices: newChoiceArr };
+    // setQuestion(newQuestion);
     dispatch({
       type: "ADD_QUESTION_FIELD",
       question: newQuestion,
@@ -49,17 +66,32 @@ const index = (props: Props) => {
   const handleCheckboxChange = () => {
     // dispatch action that changes the questions disqualify state
     setIsChecked(!isChecked);
+    const newQuestion = { ...question!, disqualify: !isChecked };
+    // setQuestion(newQuestion);
     dispatch({
       type: "ADD_QUESTION_FIELD",
       question: { ...state.question!, disqualify: !isChecked },
     });
   };
 
-  console.log("box is checked: ", isChecked);
+  const changeMaxChoice = (value: number) => {
+    const newQuestion = { ...question!, maxValue: value };
+    dispatch({
+      type: "ADD_QUESTION_FIELD",
+      question: newQuestion,
+    });
+  };
 
   return (
     <div className={props.className + ""}>
-      <TextInput fieldName="Question" type="text" value="" name="question" />
+      <TextInput
+        placeholder="Type here"
+        fieldName="Question"
+        type="text"
+        value={question?.question as string}
+        name="question"
+        onChange={changeQuestionName}
+      />
       {state.questionType === "YesNo" ? (
         <div>
           <label>
@@ -73,11 +105,27 @@ const index = (props: Props) => {
         </div>
       ) : state.questionType === "Dropdown" ||
         state.questionType === "MultipleChoice" ? (
-        <ChoiceMap
-          setChoice={changeChoice}
-          setter={appendArray}
-          array={question?.choices!}
-        />
+        <div>
+          <ChoiceMap
+            setOther={toggleOther}
+            other={question?.other!}
+            setChoice={changeChoice}
+            setter={appendArray}
+            array={question?.choices!}
+          />
+
+          {state.questionType === "MultipleChoice" && (
+            <TextInput
+              className="mt-[50px]"
+              fieldName="Max choice allowed"
+              name="maxChoice"
+              type="number"
+              placeholder="Enter number of choice allowed here"
+              value={props.question?.maxChoice as number}
+              onChange={changeMaxChoice}
+            />
+          )}
+        </div>
       ) : (
         <></>
       )}
