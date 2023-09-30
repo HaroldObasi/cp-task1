@@ -20,7 +20,7 @@ const questionTypes: Array<QuestionTypeObject> = [
     name: "Short Answer",
     key: "ShortAnswer",
   },
-  { name: "Yes No", key: "YesNo" },
+  { name: "Yes/No questions", key: "YesNo" },
   { name: "Dropdown", key: "Dropdown" },
   { name: "Multiple Choice", key: "MultipleChoice" },
   { name: "Date", key: "Date" },
@@ -32,13 +32,13 @@ const DropDown = (props: Props) => {
   const { state, dispatch } = useContext(ModalContext);
   return (
     <div>
-      <label className="pb-5" htmlFor="type">
+      <label className="font-semibold text-xl" htmlFor="type">
         {props.title}
       </label>
       <select
         name="type"
         id=""
-        className="border rounded-md border-black py-3 px-2 w-full focus:outline-none"
+        className="border rounded-md mt-2 border-black py-3 px-2 w-full focus:outline-none"
         onChange={(e) => {
           dispatch({
             type: "CHANGE_QUESTION_TYPE",
