@@ -244,10 +244,12 @@ export const ModalContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer as any, initialState);
 
   return (
-    <ModalContext.Provider value={{ state, dispatch }}>
+    <ModalContext.Provider
+      value={{ state: state as any, dispatch: dispatch as any }}
+    >
       {children}
     </ModalContext.Provider>
   );
