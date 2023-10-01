@@ -4,11 +4,14 @@ import {
   QuestionType,
   QuestionTemplate,
   ApplicationFormAttributes,
+  PersonalInformationTemplate,
+  ProfileTemplate,
 } from "@/app/types/ApplicationForm";
 
 type ActionType = {
   type: string;
-  caller?: string;
+  caller?: "personalInformation" | "profile" | "customisedQuestions" | null;
+  // caller?: string | null;
   key?: string;
   questionType?: QuestionType;
   question?: QuestionTemplate;
@@ -31,12 +34,12 @@ export const defaultQuestion: QuestionTemplate = {
 
 type StateType = {
   showModal: boolean;
-  caller?: string | null;
+  caller?: "personalInformation" | "profile" | "customisedQuestions" | null;
   questionType?: QuestionType;
   question?: QuestionTemplate;
   globalEditMode: boolean;
-  editIndex: number | null;
-  defaultFormAttributes?: ApplicationFormAttributes | any;
+  editIndex: number | null | undefined;
+  defaultFormAttributes?: ApplicationFormAttributes;
 };
 
 const initialState: StateType = {
@@ -44,12 +47,99 @@ const initialState: StateType = {
   caller: null,
   questionType: "Paragraph",
   question: defaultQuestion,
-  defaultFormAttributes: {},
+  defaultFormAttributes: {
+    coverImage: "",
+    personalInformation: {
+      firstName: {
+        internalUse: false,
+        show: false,
+      },
+      lastname: {
+        internalUse: false,
+        show: false,
+      },
+      emailId: {
+        internalUse: false,
+        show: false,
+      },
+      phoneNumber: {
+        internalUse: false,
+        show: false,
+      },
+      nationality: {
+        internalUse: false,
+        show: false,
+      },
+      currentResidence: {
+        internalUse: false,
+        show: false,
+      },
+      idNumber: {
+        internalUse: false,
+        show: false,
+      },
+      dateOfBirth: {
+        internalUse: false,
+        show: false,
+      },
+      gender: {
+        internalUse: false,
+        show: false,
+      },
+      personalQuestions: [
+        {
+          id: "",
+          type: "Paragraph",
+          question: "",
+          choices: [""],
+          maxChoice: 0,
+          disqualify: false,
+          other: false,
+        },
+      ],
+    },
+    profile: {
+      education: {
+        show: true,
+        mandatory: true,
+      },
+      experience: {
+        show: true,
+        mandatory: true,
+      },
+      resume: {
+        show: true,
+        mandatory: true,
+      },
+      profileQuestions: [
+        {
+          id: "",
+          type: "Paragraph",
+          question: "",
+          choices: [""],
+          maxChoice: 0,
+          disqualify: false,
+          other: false,
+        },
+      ],
+    },
+    customisedQuestions: [
+      {
+        id: "",
+        type: "Paragraph",
+        question: "",
+        choices: [""],
+        maxChoice: 0,
+        disqualify: false,
+        other: false,
+      },
+    ],
+  },
   editIndex: null,
   globalEditMode: false,
 };
 
-const reducer = (state: StateType, action: ActionType) => {
+const reducer = (state: StateType, action: ActionType): StateType => {
   switch (action.type) {
     case "SHOW":
       return { ...state, showModal: true, caller: action.caller };
@@ -94,140 +184,237 @@ const reducer = (state: StateType, action: ActionType) => {
       };
       return {
         ...state,
-        question: updatedQuestionText,
+        // question: updatedQuestionText,
       };
 
     case "UPDATE_FORM":
-      let caller = action.caller;
-      let question = action.question;
-      let key: string = "";
+      const caller = action.caller as keyof ApplicationFormAttributes;
+      const question = action.question;
+      let key:
+        | keyof Required<ApplicationFormAttributes>["profile"]
+        | keyof ApplicationFormAttributes["personalInformation"];
 
-      if (question === defaultQuestion) {
+      if (
+        question === defaultQuestion ||
+        question == undefined ||
+        state.defaultFormAttributes == undefined
+      ) {
+        return { ...state };
+      }
+
+      if (caller === "coverImage") {
         return { ...state };
       }
 
       if (caller === "personalInformation") {
         key = "personalQuestions";
-      } else if (caller === "profile") {
-        key = "profileQuestions";
-      } else if (caller === "customisedQuestions") {
+        const g = state.defaultFormAttributes[caller][key];
+        if (g == undefined) {
+          return state;
+        }
+        const updatedFormAttributes = {
+          ...state.defaultFormAttributes[caller],
+          [key]: [...g, question],
+        };
         const updatedForm = {
           ...state.defaultFormAttributes,
-          [caller]: [...state.defaultFormAttributes[caller!], question],
+          [caller as string]: updatedFormAttributes,
         };
-        return { ...state, defaultFormAttributes: updatedForm };
+
+        return {
+          ...state,
+          defaultFormAttributes: updatedForm,
+        };
+      } else if (caller === "profile") {
+        key = "profileQuestions";
+        const g = state.defaultFormAttributes?.[caller]?.[key];
+        if (g == undefined) {
+          return state;
+        }
+        const updatedFormAttributes = {
+          ...state.defaultFormAttributes[caller],
+          [key]: [...g, question],
+        };
+        const updatedForm = {
+          ...state.defaultFormAttributes,
+          [caller as string]: updatedFormAttributes,
+        };
+
+        return {
+          ...state,
+          defaultFormAttributes: updatedForm,
+        };
+      } else if (caller === "customisedQuestions") {
+        const g = state.defaultFormAttributes?.[caller];
+        if (g == undefined) {
+          return { ...state };
+        }
+        return {
+          ...state,
+          defaultFormAttributes: {
+            ...state.defaultFormAttributes,
+            [caller]: [...g, question],
+          },
+        };
       }
 
-      const updatedFormAttributes = {
-        ...state.defaultFormAttributes[caller!],
-        [key]: [...state.defaultFormAttributes[caller!][key], question],
-      };
-
-      const updatedForm = {
-        ...state.defaultFormAttributes,
-        [caller as string]: updatedFormAttributes,
-      };
-
-      return {
-        ...state,
-        defaultFormAttributes: updatedForm,
-      };
     case "EDIT_FORM_INDEX":
-      let editCaller = action.caller;
-      let editQuestion = action.question;
-      let editKey: string = "";
-      let index: number = action.editIndex!;
+      const editCaller = action.caller as keyof ApplicationFormAttributes;
+      const editQuestion = action.question;
+      let editKey:
+        | keyof Required<ApplicationFormAttributes>["profile"]
+        | keyof ApplicationFormAttributes["personalInformation"];
+      const index: number = action.editIndex!;
 
       if (editCaller === "customisedQuestions") {
-        const arrCopy = state.defaultFormAttributes[editCaller!];
+        const arrCopy = state?.defaultFormAttributes?.[editCaller];
+        if (arrCopy == undefined || editQuestion == undefined) {
+          return state;
+        }
         arrCopy[index] = editQuestion;
-        return { ...state, [editCaller]: arrCopy, question: defaultQuestion };
+
+        if (state.defaultFormAttributes) {
+          return {
+            ...state,
+            defaultFormAttributes: {
+              ...state.defaultFormAttributes,
+              [editCaller]: arrCopy,
+            },
+            question: defaultQuestion,
+          };
+        } else {
+          return state;
+        }
       }
 
       if (editCaller === "personalInformation") {
         editKey = "personalQuestions";
+        if (state.defaultFormAttributes) {
+          const arrCopy = state.defaultFormAttributes[editCaller][editKey];
+          if (arrCopy !== undefined && editQuestion) {
+            arrCopy[index] = editQuestion;
+          }
+
+          const formAttrs = {
+            ...state.defaultFormAttributes[editCaller!],
+            [editKey]: arrCopy,
+          };
+
+          const form = {
+            ...state.defaultFormAttributes,
+            [editCaller as string]: formAttrs,
+          };
+
+          return {
+            ...state,
+            defaultFormAttributes: form,
+            question: defaultQuestion,
+          };
+        }
       } else if (editCaller === "profile") {
         editKey = "profileQuestions";
+        if (state.defaultFormAttributes) {
+          const arrCopy = state.defaultFormAttributes?.[editCaller]?.[editKey];
+          if (arrCopy !== undefined && editQuestion) {
+            arrCopy[index] = editQuestion;
+          }
+
+          const formAttrs = {
+            ...state.defaultFormAttributes[editCaller!],
+            [editKey]: arrCopy,
+          };
+
+          const form = {
+            ...state.defaultFormAttributes,
+            [editCaller as string]: formAttrs,
+          };
+
+          return {
+            ...state,
+            defaultFormAttributes: form,
+            question: defaultQuestion,
+          };
+        }
       }
-
-      const arrCopy = state.defaultFormAttributes[editCaller!][editKey!];
-      arrCopy[index] = editQuestion;
-
-      const formAttrs = {
-        ...state.defaultFormAttributes[editCaller!],
-        [editKey]: arrCopy,
-      };
-
-      const form = {
-        ...state.defaultFormAttributes,
-        [editCaller as string]: formAttrs,
-      };
-
-      return {
-        ...state,
-        defaultFormAttributes: form,
-        question: defaultQuestion,
-      };
     case "EDIT_MODE":
-      let modeKey: string = "";
+      let modeKey:
+        | keyof Required<ApplicationFormAttributes>["profile"]
+        | keyof ApplicationFormAttributes["personalInformation"];
       let returnObj = {};
       let eQuestion: QuestionTemplate | undefined = undefined;
 
       if (action.caller === "customisedQuestions") {
-        eQuestion =
-          state.defaultFormAttributes[action.caller][
-            action.questionIndex as number
-          ];
-
+        if (state.defaultFormAttributes) {
+          eQuestion =
+            state.defaultFormAttributes[action.caller]?.[
+              action.questionIndex as number
+            ];
+        }
         // return { ...state, questionType: question.type, question: question };
       } else if (action.caller === "personalInformation") {
         modeKey = "personalQuestions";
-        eQuestion =
-          state.defaultFormAttributes[action.caller][modeKey][
-            action.questionIndex as number
-          ];
+        if (state.defaultFormAttributes) {
+          eQuestion =
+            state.defaultFormAttributes[action.caller][modeKey]?.[
+              action.questionIndex as number
+            ];
+        }
         // return { ...state, question: question, questionType: question.type };
       } else if (action.caller === "profile") {
         modeKey = "profileQuestions";
-        eQuestion =
-          state.defaultFormAttributes[action.caller][modeKey][
-            action.questionIndex as number
-          ];
+        if (state.defaultFormAttributes) {
+          eQuestion =
+            state.defaultFormAttributes?.[action.caller]?.[modeKey]?.[
+              action.questionIndex as number
+            ];
+        }
         // return { ...state, question: question, questionType: question.type };
       }
-      returnObj = {
+      return {
         ...state,
         questionType: eQuestion?.type,
         caller: action.caller,
         editIndex: action.questionIndex,
         question: eQuestion,
       };
-      return returnObj;
 
     case "CHANGE_FORM_ITEM":
-      console.log(`${action.formItemKey}: `, action.formItemValue);
-      const newObject = {
-        ...state.defaultFormAttributes[action.caller!][action.formItemField!],
-        [action.formItemKey!]: action.formItemValue,
-      };
+      if (
+        state.defaultFormAttributes &&
+        action.caller &&
+        action.formItemField
+      ) {
+        const newObject = {
+          // @ts-ignore
+          ...state.defaultFormAttributes?.[action.caller]?.[
+            action.formItemField
+          ],
+          [action.formItemKey as string]: action.formItemValue,
+        };
 
-      console.log(`${action.formItemField}: `, newObject);
+        const newFormField = {
+          ...state.defaultFormAttributes[action.caller],
+          [action.formItemField!]: newObject,
+        };
 
-      const newFormField = {
-        ...state.defaultFormAttributes[action.caller!],
-        [action.formItemField!]: newObject,
-      };
+        const newForm2 = {
+          ...state.defaultFormAttributes,
+          [action.caller!]: newFormField,
+        };
 
-      console.log(`${action.caller}`, newFormField);
+        return { ...state, defaultFormAttributes: newForm2 };
+      }
 
-      const newForm2 = {
-        ...state.defaultFormAttributes,
-        [action.caller!]: newFormField,
-      };
+    // console.log(`${action.caller}`, newFormField);
 
-      console.log("defaultFormAttrs", newForm2);
+    // const newForm2 = {
+    //   ...state.defaultFormAttributes,
+    //   [action.caller!]: newFormField,
+    // };
 
-      return { ...state, defaultFormAttributes: newForm2 };
+    // console.log("defaultFormAttrs", newForm2);
+
+    // return { ...state, defaultFormAttributes: newForm2 };
 
     default:
       return state;
@@ -244,12 +431,13 @@ export const ModalContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [state, dispatch] = useReducer(reducer as any, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <ModalContext.Provider
+    <ModalContext.Provider value={{ state, dispatch }}>
+      {/* <ModalContext.Provider
       value={{ state: state as any, dispatch: dispatch as any }}
-    >
+    > */}
       {children}
     </ModalContext.Provider>
   );
