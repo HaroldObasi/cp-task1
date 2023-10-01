@@ -25,7 +25,6 @@ type ApplicationFormAttributes = {
     experience: ProfileTemplate;
     resume: ProfileTemplate;
     profileQuestions?: Array<QuestionTemplate>;
-    [key: string]: ProfileTemplate | Array<QuestionTemplate> | undefined;
   };
   customisedQuestions?: Array<QuestionTemplate>;
 };
