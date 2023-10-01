@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-// import axios from "axios";
 
 import { ApplicationForm } from "../types/ApplicationForm";
 import { ModalContext } from "@/context/modal.context";
