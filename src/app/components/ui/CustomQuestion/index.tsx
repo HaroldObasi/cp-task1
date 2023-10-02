@@ -60,9 +60,6 @@ const index = (props: Props) => {
     }
   };
 
-  console.log("index: ", props.index, state.editIndex);
-  console.log("caller: ", props.parent, state.caller);
-
   return (
     <div className={`${!props.lastItem && "border-b mb-[25px]"} pb-[25px] `}>
       <div className={`flex justify-between items-center`}>

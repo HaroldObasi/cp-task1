@@ -24,7 +24,6 @@ const index = (props: Props) => {
       formItemValue: value,
     });
   };
-  console.log("show: ", props.show);
   return (
     <div className="pb-[25px] border-b mb-[23px] flex justify-between items-center border-[#C4C4C4]">
       <p className="font-semibold text-xl">

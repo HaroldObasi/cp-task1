@@ -287,7 +287,6 @@ const reducer = (state: StateType, action: ActionType): StateType => {
       }
 
       if (editCaller === "personalInformation") {
-        console.log("summoned");
         editKey = "personalQuestions";
         if (state.defaultFormAttributes) {
           const arrCopy = state.defaultFormAttributes[editCaller][editKey];
@@ -425,13 +424,9 @@ const reducer = (state: StateType, action: ActionType): StateType => {
       if (action.caller === "personalInformation") {
         const newArr =
           state.defaultFormAttributes?.personalInformation.personalQuestions;
-
-        console.log("inde, :", action.questionIndex);
         if (action.questionIndex !== undefined) {
-          console.log("prev arr: ", newArr);
-
           newArr?.splice(action.questionIndex, 1);
-          console.log("new arr: ", newArr);
+
           const newPersonalInformation = {
             ...state.defaultFormAttributes?.personalInformation,
             personalQuestions: newArr,

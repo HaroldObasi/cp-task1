@@ -25,7 +25,6 @@ const index = (props: Props) => {
       setQuestion(state.question);
     }
   }, [state.question]);
-  console.log("the questions: ", question);
   const changeQuestionName = (string: string) => {
     const newQuestion = { ...question!, question: string };
     dispatch({
