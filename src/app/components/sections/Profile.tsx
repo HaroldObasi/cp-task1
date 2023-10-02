@@ -20,22 +20,22 @@ function Profile({}: Props) {
           parent="profile"
           itemName="education"
           name="Education"
-          show={state.defaultFormAttributes.profile.education.show}
-          mandatory={state.defaultFormAttributes.profile.education.mandatory}
+          show={state.defaultFormAttributes?.profile?.education.show}
+          mandatory={state.defaultFormAttributes?.profile?.education.mandatory}
         />
         <FormItem
           parent="profile"
           itemName="experience"
           name="Experience"
-          show={state.defaultFormAttributes.profile.experience.show}
-          mandatory={state.defaultFormAttributes.profile.experience.mandatory}
+          show={state.defaultFormAttributes?.profile?.experience.show}
+          mandatory={state.defaultFormAttributes?.profile?.experience.mandatory}
         />
         <FormItem
           parent="profile"
           itemName="resume"
           name="Resume"
-          show={state.defaultFormAttributes.profile.resume.show}
-          mandatory={state.defaultFormAttributes.profile.resume.mandatory}
+          show={state.defaultFormAttributes?.profile?.resume.show}
+          mandatory={state.defaultFormAttributes?.profile?.resume.mandatory}
         />
         {profileQuestions.map(
           (

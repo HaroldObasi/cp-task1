@@ -15,7 +15,7 @@ const MainContent = () => {
       const response = await fetch(
         "http://127.0.0.1:4010/api/819.6588064757781/programs/qui/application-form"
       );
-      const data: any = await response.json();
+      const data: ApplicationForm = await response.json();
       dispatch({
         type: "SET_FORM_ATTRS",
         defaultFormAttributes: data.data.attributes,

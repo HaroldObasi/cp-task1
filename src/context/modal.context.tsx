@@ -11,7 +11,6 @@ import {
 type ActionType = {
   type: string;
   caller?: "personalInformation" | "profile" | "customisedQuestions" | null;
-  // caller?: string | null;
   key?: string;
   questionType?: QuestionType;
   question?: QuestionTemplate;
@@ -288,6 +287,7 @@ const reducer = (state: StateType, action: ActionType): StateType => {
       }
 
       if (editCaller === "personalInformation") {
+        console.log("summoned");
         editKey = "personalQuestions";
         if (state.defaultFormAttributes) {
           const arrCopy = state.defaultFormAttributes[editCaller][editKey];
@@ -405,16 +405,70 @@ const reducer = (state: StateType, action: ActionType): StateType => {
         return { ...state, defaultFormAttributes: newForm2 };
       }
 
-    // console.log(`${action.caller}`, newFormField);
+    case "DELETE_FORM_INDEX":
+      if (action.caller === "customisedQuestions") {
+        const newArr = state.defaultFormAttributes?.customisedQuestions;
+        if (action.questionIndex !== undefined) {
+          newArr?.splice(action.questionIndex, 1);
+          const newObj = {
+            ...state.defaultFormAttributes,
+            customisedQuestions: newArr,
+          };
 
-    // const newForm2 = {
-    //   ...state.defaultFormAttributes,
-    //   [action.caller!]: newFormField,
-    // };
+          return {
+            ...state,
+            defaultFormAttributes: newObj as ApplicationFormAttributes,
+          };
+        }
+      }
 
-    // console.log("defaultFormAttrs", newForm2);
+      if (action.caller === "personalInformation") {
+        const newArr =
+          state.defaultFormAttributes?.personalInformation.personalQuestions;
 
-    // return { ...state, defaultFormAttributes: newForm2 };
+        console.log("inde, :", action.questionIndex);
+        if (action.questionIndex !== undefined) {
+          console.log("prev arr: ", newArr);
+
+          newArr?.splice(action.questionIndex, 1);
+          console.log("new arr: ", newArr);
+          const newPersonalInformation = {
+            ...state.defaultFormAttributes?.personalInformation,
+            personalQuestions: newArr,
+          };
+
+          const newForm = {
+            ...state.defaultFormAttributes,
+            personalInformaton: newPersonalInformation,
+          };
+
+          return {
+            ...state,
+            defaultFormAttributes: newForm as ApplicationFormAttributes,
+          };
+        }
+      }
+
+      if (action.caller === "profile") {
+        const newArr = state.defaultFormAttributes?.profile?.profileQuestions;
+        if (action.questionIndex !== undefined) {
+          newArr?.splice(action.questionIndex, 1);
+          const newProfileInformation = {
+            ...state.defaultFormAttributes?.profile,
+            profileQuestions: newArr,
+          };
+
+          const newForm = {
+            ...state.defaultFormAttributes,
+            profile: newProfileInformation,
+          };
+
+          return {
+            ...state,
+            defaultFormAttributes: newForm as ApplicationFormAttributes,
+          };
+        }
+      }
 
     default:
       return state;

@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import DropDown from "../DropDown";
 import SectionItem from "../SectionItem";
 import QuestionDetails from "../QuestionDetail";
+import deleteIcon from "@/assets/delete.svg";
+import Image from "next/image";
 
 const Wrapper = () => {
   const { state, dispatch } = useContext(ModalContext);
@@ -15,8 +17,8 @@ const Wrapper = () => {
 
     dispatch({
       type: "UPDATE_FORM",
-      question: question as any,
-      caller: caller as any,
+      question: question,
+      caller: caller,
     });
 
     dispatch({
@@ -32,7 +34,17 @@ const Wrapper = () => {
           <DropDown title="Type" />
           <QuestionDetails question={state.question} className="my-[25px]" />
           <div className="flex justify-between">
-            <button className="text-red-600">Delete Question</button>
+            <button
+              className="text-[#A80000] flex items-center font-semibold"
+              onClick={() =>
+                dispatch({
+                  type: "HIDE",
+                })
+              }
+            >
+              <Image alt="Delete icon" src={deleteIcon} />
+              Delete Question
+            </button>
             <button
               onClick={(e) => handleSubmit(e)}
               className="text-white font-semibold text-base py-1 px-2 bg-green-600 rounded"

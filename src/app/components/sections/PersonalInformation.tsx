@@ -36,10 +36,10 @@ function PersonalInformation({}: Props) {
           name="Phone"
           subText="(without dial code)"
           show={
-            state.defaultFormAttributes.personalInformation.phoneNumber.show
+            state.defaultFormAttributes?.personalInformation.phoneNumber.show
           }
           internalUse={
-            state.defaultFormAttributes.personalInformation.phoneNumber
+            state.defaultFormAttributes?.personalInformation.phoneNumber
               .internalUse
           }
         />
@@ -48,10 +48,10 @@ function PersonalInformation({}: Props) {
           itemName="nationality"
           name="Nationality"
           show={
-            state.defaultFormAttributes.personalInformation.nationality.show
+            state.defaultFormAttributes?.personalInformation.nationality.show
           }
           internalUse={
-            state.defaultFormAttributes.personalInformation.nationality
+            state.defaultFormAttributes?.personalInformation.nationality
               .internalUse
           }
         />
@@ -60,11 +60,11 @@ function PersonalInformation({}: Props) {
           itemName="currentResidence"
           name="Current Residence"
           show={
-            state.defaultFormAttributes.personalInformation.currentResidence
+            state.defaultFormAttributes?.personalInformation.currentResidence
               .show
           }
           internalUse={
-            state.defaultFormAttributes.personalInformation.currentResidence
+            state.defaultFormAttributes?.personalInformation.currentResidence
               .internalUse
           }
         />
@@ -72,9 +72,9 @@ function PersonalInformation({}: Props) {
           parent="personalInformation"
           itemName="idNumber"
           name="ID Number"
-          show={state.defaultFormAttributes.personalInformation.idNumber.show}
+          show={state.defaultFormAttributes?.personalInformation.idNumber.show}
           internalUse={
-            state.defaultFormAttributes.personalInformation.idNumber.internalUse
+            state.defaultFormAttributes?.personalInformation.idNumber.internalUse
           }
         />
         <FormItem
@@ -82,10 +82,10 @@ function PersonalInformation({}: Props) {
           itemName="dateOfBirth"
           name="Date Of Birth"
           show={
-            state.defaultFormAttributes.personalInformation.dateOfBirth.show
+            state.defaultFormAttributes?.personalInformation.dateOfBirth.show
           }
           internalUse={
-            state.defaultFormAttributes.personalInformation.dateOfBirth
+            state.defaultFormAttributes?.personalInformation.dateOfBirth
               .internalUse
           }
         />
@@ -93,9 +93,9 @@ function PersonalInformation({}: Props) {
           parent="personalInformation"
           itemName="gender"
           name="Gender"
-          show={state.defaultFormAttributes.personalInformation.gender.show}
+          show={state.defaultFormAttributes?.personalInformation.gender.show}
           internalUse={
-            state.defaultFormAttributes.personalInformation.gender.internalUse
+            state.defaultFormAttributes?.personalInformation.gender.internalUse
           }
         />
         {personalQuestions.map(

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { QuestionTemplate } from "@/app/types/ApplicationForm";
 import editIcon from "@/assets/editIcon.svg";
+import deleteIcon from "@/assets/delete.svg";
 import Image from "next/image";
 import QuestionDetails from "../QuestionDetail";
 import { ModalContext } from "@/context/modal.context";
@@ -20,7 +21,7 @@ type Props = {
   lastItem: boolean;
   question: QuestionTemplate;
   index: number;
-  parent: string;
+  parent: "personalInformation" | "profile" | "customisedQuestions" | null;
 };
 
 const index = (props: Props) => {
@@ -78,9 +79,20 @@ const index = (props: Props) => {
           <QuestionDetails question={state.question} className="mt-3" />
           <div className="flex justify-between">
             <button
-              className="text-red-600"
-              onClick={() => console.log("dellet")}
+              className="text-[#A80000] flex items-center font-semibold"
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch({
+                  type: "DELETE_FORM_INDEX",
+                  caller: props.parent,
+                  questionIndex: props.index,
+                });
+                dispatch({
+                  type: "HIDE",
+                });
+              }}
             >
+              <Image alt="Delete icon" src={deleteIcon} />
               Delete Question
             </button>
             <button

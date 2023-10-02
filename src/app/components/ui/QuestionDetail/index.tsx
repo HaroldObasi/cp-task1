@@ -35,9 +35,12 @@ const index = (props: Props) => {
   };
 
   const appendArray = (choice: string) => {
-    const newChoiceArr = [...question?.choices!, choice];
-    const newQuestion = { ...question!, choices: newChoiceArr };
-    // setQuestion(newQuestion);
+    if (question?.choices == undefined) {
+      return;
+    }
+    const newChoiceArr = [...question?.choices, choice];
+    const newQuestion = { ...question, choices: newChoiceArr };
+
     dispatch({
       type: "ADD_QUESTION_FIELD",
       question: newQuestion,
@@ -75,7 +78,7 @@ const index = (props: Props) => {
   };
 
   const changeMaxChoice = (value: number) => {
-    const newQuestion = { ...question!, maxValue: value };
+    const newQuestion = { ...question!, maxChoice: value };
     dispatch({
       type: "ADD_QUESTION_FIELD",
       question: newQuestion,

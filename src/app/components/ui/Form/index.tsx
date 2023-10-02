@@ -5,7 +5,7 @@ import { ModalContext } from "@/context/modal.context";
 
 type Props = {
   children: React.ReactNode;
-  parent?: string;
+  parent?: "personalInformation" | "profile" | "customisedQuestions" | null;
 };
 
 const index = (props: Props) => {

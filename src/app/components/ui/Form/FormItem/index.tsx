@@ -10,7 +10,7 @@ type Props = {
   internalUse?: boolean;
   show?: boolean;
   mandatory?: boolean;
-  parent: string;
+  parent: "personalInformation" | "profile" | "customisedQuestions" | null;
 };
 
 const index = (props: Props) => {

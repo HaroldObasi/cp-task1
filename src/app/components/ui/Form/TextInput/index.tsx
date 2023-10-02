@@ -14,14 +14,7 @@ type Props = {
 };
 
 const index = (props: Props) => {
-  const { state, dispatch } = useContext(ModalContext);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // props.onChange(event.target.value)
-    dispatch({
-      type: "CHANGE_QUESTION_TEXT",
-      question: event.target.value as any,
-    });
-  };
+
   // send name of field (question), text data, to reducer, in the reducer change the current questions question field to the text data
   return (
     <div className={`${props.className} flex flex-col mb-[23px] pb-1`}>
@@ -32,7 +25,7 @@ const index = (props: Props) => {
         className="border rounded-md border-black py-3 px-2 w-full focus:outline-none"
         type={props.type}
         name={props.name}
-        // value={props.value}
+        value={props.value}
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
         id=""
