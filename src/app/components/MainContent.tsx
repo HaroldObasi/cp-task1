@@ -10,7 +10,7 @@ import arrow from "@/assets/arrow.svg";
 import Image from "next/image";
 
 const MainContent = () => {
-  const { dispatch } = useContext(ModalContext);
+  const { state, dispatch } = useContext(ModalContext);
   const [dataLoaded, setDataLoaded] = useState(false);
   const fetchForm = async () => {
     try {
@@ -28,9 +28,47 @@ const MainContent = () => {
     }
   };
 
+  const generateUUID = () => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
+  };
+
+  const saveForm = async () => {
+    const url =
+      "http://127.0.0.1:4010/api/158.25034942304325/programs/aut/application-form";
+    const data = {
+      id: generateUUID(),
+      type: "applicationForm",
+      attributes: state.defaultFormAttributes,
+    };
+
+    const payload = { data: data };
+    try {
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchForm();
   }, []);
+
+  useEffect(() => {
+    saveForm();
+  }, [state.defaultFormAttributes]);
 
   return (
     <div className={`overflow-y-auto w-full h-screen`}>
