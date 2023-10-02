@@ -6,6 +6,8 @@ import PersonalInformation from "./sections/PersonalInformation";
 import Profile from "./sections/Profile";
 import AdditionalQuestions from "./sections/AdditionalQuestions";
 import CoverImage from "./sections/CoverImage";
+import arrow from "@/assets/arrow.svg";
+import Image from "next/image";
 
 const MainContent = () => {
   const { dispatch } = useContext(ModalContext);
@@ -33,11 +35,27 @@ const MainContent = () => {
   return (
     <div className={`overflow-y-auto w-full h-screen`}>
       {dataLoaded && (
-        <div className="pl-[70px]">
-          <CoverImage />
-          <PersonalInformation />
-          <Profile />
-          <AdditionalQuestions />
+        <div>
+          <div className="flex w-full shadow-md mt-10 pl-[70px]">
+            <p className="text-xl pr-[78px] py-[53px]">Program Details</p>
+            <p className="text-xl px-[78px] py-[53px] relative  bg-[#00635B] text-white">
+              Application Form
+              <Image
+                src={arrow}
+                alt="arrow"
+                className="absolute right-[-20px] top-12"
+              />
+            </p>
+            <p className="text-xl px-[78px] py-[53px]">Workflow</p>
+            <p className="text-xl pl-[78px] py-[53px]">Preview</p>
+          </div>
+
+          <div className="pl-[70px]">
+            <CoverImage />
+            <PersonalInformation />
+            <Profile />
+            <AdditionalQuestions />
+          </div>
         </div>
       )}
     </div>
