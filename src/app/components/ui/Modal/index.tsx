@@ -47,7 +47,7 @@ const Wrapper = () => {
             </button>
             <button
               onClick={(e) => handleSubmit(e)}
-              className="text-white font-semibold text-base py-1 px-2 bg-green-600 rounded"
+              className="text-white py-1 px-2 bg-[#087B2F] font-semibold rounded"
             >
               Save
             </button>

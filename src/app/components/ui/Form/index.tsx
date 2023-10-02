@@ -21,7 +21,7 @@ const index = (props: Props) => {
         }}
       >
         <Image src={plusIcon} alt="Add a question" />
-        <p>Add a question</p>
+        <p className="font-semibold text-[15px]">Add a question</p>
       </button>
     </form>
   );
