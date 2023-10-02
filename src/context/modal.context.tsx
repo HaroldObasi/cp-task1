@@ -20,6 +20,7 @@ type ActionType = {
   formItemKey?: "internalUse" | "mandatory" | "show" | string;
   formItemField?: string;
   formItemValue?: boolean;
+  imageString?: string;
 };
 
 export const defaultQuestion: QuestionTemplate = {
@@ -464,6 +465,28 @@ const reducer = (state: StateType, action: ActionType): StateType => {
           };
         }
       }
+
+    case "UPLOAD_IMAGE":
+      const newForm = {
+        ...state.defaultFormAttributes,
+        coverImage: action.imageString,
+      };
+
+      return {
+        ...state,
+        defaultFormAttributes: newForm as ApplicationFormAttributes,
+      };
+
+    case "DELETE_IMAGE":
+      const withoutImageForm = {
+        ...state.defaultFormAttributes,
+        coverImage: "http://example.com",
+      };
+
+      return {
+        ...state,
+        defaultFormAttributes: withoutImageForm as ApplicationFormAttributes,
+      };
 
     default:
       return state;
