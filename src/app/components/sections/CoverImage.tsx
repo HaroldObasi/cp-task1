@@ -35,13 +35,15 @@ const CoverImage = (props: Props) => {
   if (!selectedImage) {
     return (
       <div
-        className={`max-h-[487px] w-[595px] shadow-lg rounded-[20px] mb-5 overflow-hidden`}
+        className={`max-h-[487px] md:w-[595px] w-full shadow-lg rounded-[20px] mb-5 overflow-hidden`}
       >
-        <p className="bg-[#D0F7FA] py-[25px] pl-[32px] text-[25px]">
+        <p className="bg-[#D0F7FA] py-[10px] pl-[14px] text-[20px] md:py-[25px] md:pl-[32px] md:text-[25px]">
           Upload cover image
         </p>
 
-        <div className={"px-[40px] py-[60px] bg-white"}>
+        <div
+          className={"px-[10px] py-[30px] sm:px-[40px] sm:py-[60px] bg-white"}
+        >
           <div className="w-full h-[210px] flex items-center border-2 rounded-[5px] border-dashed cursor-pointer">
             <div
               className="flex flex-col items-center w-full gap-1"
@@ -81,14 +83,13 @@ type ImagePreviewProps = {
 const ImagePreview = (props: ImagePreviewProps) => {
   const { dispatch } = useContext(ModalContext);
   useEffect(() => {
-    console.log("efect: ", props.selectedImage);
     dispatch({
       type: "UPLOAD_IMAGE",
       imageString: props.selectedImage as string,
     });
   }, []);
   return (
-    <div className="max-h-[487px] w-[595px] shadow-lg rounded-[20px] mb-5">
+    <div className="max-h-[487px] md:w-[595px] w-full shadow-lg rounded-[20px] mb-5 overflow-hidden">
       <img src={props.selectedImage} className="w-full h-full" alt="Selected" />
       <button
         onClick={() => props.deleteImage()}

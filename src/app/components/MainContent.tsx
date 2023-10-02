@@ -73,8 +73,8 @@ const MainContent = () => {
   return (
     <div className={`overflow-y-auto w-full h-screen`}>
       {dataLoaded && (
-        <div>
-          <div className="flex w-full shadow-md mt-10 pl-[70px] mb-16">
+        <div className="">
+          <div className="hidden lg:flex w-full shadow-md mt-10 pl-[70px] mb-16 ">
             <p className="text-xl pr-[78px] py-[53px]">Program Details</p>
             <p className="text-xl px-[78px] py-[53px] relative  bg-[#00635B] text-white">
               Application Form
@@ -88,7 +88,7 @@ const MainContent = () => {
             <p className="text-xl pl-[78px] py-[53px]">Preview</p>
           </div>
 
-          <div className="pl-[70px]">
+          <div className="px-[8px] md:pl-[70px] pt-10">
             <CoverImage />
             <PersonalInformation />
             <Profile />
