@@ -15,6 +15,10 @@ const Sidebar = () => {
         <Image src={homeIcon} alt="home_icon" />
         <Image src={noteIcon} alt="note_icon" />
       </div>
+
+      <div className="mt-auto mb-4 bg-[#1D4ED8] w-[45px] h-[45px] flex rounded-full text-white justify-center items-center font-semibold">
+        <p>HM</p>
+      </div>
     </div>
   );
 };

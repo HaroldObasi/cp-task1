@@ -64,7 +64,9 @@ const index = (props: Props) => {
     <div className={`${!props.lastItem && "border-b mb-[25px]"} pb-[25px] `}>
       <div className={`flex justify-between items-center`}>
         <div>
-          <p className="text-[14px]">{questionNameMap[props.question.type]}</p>
+          <p className="text-[14px] font-medium text-[#979797]">
+            {questionNameMap[props.question.type]}
+          </p>
           <p className="text-[20px]">{props.question.question}</p>
         </div>
         <button onClick={(e) => clickEdit(e)}>

@@ -37,7 +37,7 @@ const CoverImage = (props: Props) => {
       <div
         className={`max-h-[487px] md:w-[595px] w-full shadow-lg rounded-[20px] mb-5 overflow-hidden`}
       >
-        <p className="bg-[#D0F7FA] py-[10px] pl-[14px] text-[20px] md:py-[25px] md:pl-[32px] md:text-[25px]">
+        <p className="bg-[#D0F7FA] font-semibold py-[10px] pl-[14px] text-[20px] md:py-[25px] md:pl-[32px] md:text-[25px]">
           Upload cover image
         </p>
 

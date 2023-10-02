@@ -13,7 +13,7 @@ const SectionItem = (props: Props) => {
     <div
       className={`${
         props.fullHeight === false && "max-h-[487px] overflow-y-auto"
-      } md:w-[595px] w-full shadow-lg rounded-[20px] mb-5 overflow-hidden`}
+      } md:w-[595px] w-full shadow-lg rounded-[20px] mb-5 overflow-hidden font-semibold`}
     >
       <p className="bg-[#D0F7FA] py-[10px] pl-[14px] text-[20px] md:py-[25px] md:pl-[32px] md:text-[25px]">
         {props.title}
